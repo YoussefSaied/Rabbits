@@ -1,10 +1,10 @@
-/**
- * Class that implements the simulation space of the rabbits grass simulation.
- * @author 
- */
 
 import uchicago.src.sim.space.Object2DGrid;
 
+/**
+ * Class that implements the simulation space of the rabbits grass simulation.
+ * @author Group 69
+ */
 
 public class RabbitsGrassSimulationSpace {
     private Object2DGrid grassSpace;
@@ -107,5 +107,14 @@ public class RabbitsGrassSimulationSpace {
             retVal = true;
         }
         return retVal;
+    }
+    public int getTotalGrass(){
+        int totalGrass = 0;
+        for(int i = 0; i < agentSpace.getSizeX(); i++){
+            for(int j = 0; j < agentSpace.getSizeY(); j++){
+                totalGrass += getGrassAt(i,j);
+            }
+        }
+        return totalGrass;
     }
 }
