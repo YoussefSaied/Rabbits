@@ -7,8 +7,8 @@ import uchicago.src.sim.space.Object2DGrid;
  */
 
 public class RabbitsGrassSimulationSpace {
-    private Object2DGrid grassSpace;
-    private Object2DGrid agentSpace;
+    private final Object2DGrid grassSpace;
+    private final Object2DGrid agentSpace;
 
     public RabbitsGrassSimulationSpace(int xSize, int ySize){
         grassSpace = new Object2DGrid(xSize, ySize);
@@ -45,7 +45,7 @@ public class RabbitsGrassSimulationSpace {
     public int getGrassAt(int x, int y){
         int i;
         if(grassSpace.getObjectAt(x,y)!= null){
-            i = ((Integer)grassSpace.getObjectAt(x,y)).intValue();
+            i = (Integer)grassSpace.getObjectAt(x,y);
         }
         else{
             i = 0;
@@ -72,10 +72,10 @@ public class RabbitsGrassSimulationSpace {
         int count = 0;
         int countLimit = 10 * agentSpace.getSizeX() * agentSpace.getSizeY();
 
-        while((retVal==false) && (count < countLimit)){
+        while((!retVal) && (count < countLimit)){
             int x = (int)(Math.random()*(agentSpace.getSizeX()));
             int y = (int)(Math.random()*(agentSpace.getSizeY()));
-            if(isCellOccupied(x,y) == false){
+            if(!isCellOccupied(x,y) ){
                 agentSpace.putObjectAt(x,y,agent);
                 agent.setXY(x,y);
                 agent.setRabbitsGrassSimulationSpace(this);
