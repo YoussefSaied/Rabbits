@@ -10,7 +10,7 @@ import uchicago.src.sim.space.Object2DGrid;
 /**
  * Class that implements the simulation agent for the rabbits grass simulation.
 
- * @author
+ * @author Group 69
  */
 
 public class RabbitsGrassSimulationAgent implements Drawable {
@@ -21,7 +21,7 @@ public class RabbitsGrassSimulationAgent implements Drawable {
 	private int vY;
 	private int energy;
 	private static int IDNumber = 0;
-	private int ID;
+	private final int  ID;
 	private RabbitsGrassSimulationSpace rgsSpace;
 
 

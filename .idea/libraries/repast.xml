@@ -2,6 +2,8 @@
   <library name="repast">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/rabbits/lib/repast.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rabbits/lib/lib/colt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rabbits/lib/lib/plot.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
