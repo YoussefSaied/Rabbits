@@ -1,113 +1,117 @@
-
 import java.awt.Color;
 
 import uchicago.src.sim.gui.Drawable;
 import uchicago.src.sim.gui.SimGraphics;
 import uchicago.src.sim.space.Object2DGrid;
-
-
-
 /**
  * Class that implements the simulation agent for the rabbits grass simulation.
 
- * @author Group 69
+ * @author
  */
 
 public class RabbitsGrassSimulationAgent implements Drawable {
+	
+	  private int x;
+	  private int y;
+	  private int vX;
+	  private int vY;
+	  private int energy;
+	  private static int IDNumber = 0;
+	  private int ID;
+	  private RabbitsGrassSimulationSpace rgsSpace;
 
-	private int x;
-	private int y;
-	private int vX;
-	private int vY;
-	private int energy;
-	private static int IDNumber = 0;
-	private final int  ID;
-	private RabbitsGrassSimulationSpace rgsSpace;
+	  public RabbitsGrassSimulationAgent(int maxInitEnergy, int minIntEnergy){
+	    x = -1;
+	    y = -1;
+	    setVxVy();
+	    energy = (int)((Math.random() * (maxInitEnergy - minIntEnergy)) + minIntEnergy);
+	    IDNumber++;
+	    ID = IDNumber;
+	  }
+	  
+	  private void setVxVy(){
+	    vX = 0;
+	    vY = 0;
+	    while((vX == 0) && ( vY == 0)){
+	      int randomStep = (int)Math.floor(Math.random() * 3) - 1;
+	      if(Math.random() < 0.5) {
+	    	  vY = randomStep;
+	      }
+	      else
+	      {
+	    	  vX = randomStep;
+	      }
+	    }
+	  }
+	  
+  
+	  public void setXY(int newX, int newY	){
+		    x = newX;
+		    y = newY;
+      }
+	  
+	  public void setRabbitGrassSimulationSpace(RabbitsGrassSimulationSpace rgss){
+		  rgsSpace = rgss;
+	  }
+
+	  
+	  public String getID(){
+		    return "A-" + ID;
+	  }
+
+	  public int getEnergy(){
+	    return energy;
+	  }
+	  
+	  public void setEnergy(int givenEnergy){
+	    energy = givenEnergy;
+	  }
 
 
-	public RabbitsGrassSimulationAgent(int minInitialEnergy, int maxInitialEnergy ){
-		x = -1;
-		y = -1;
-		energy = (int)((Math.random() * (maxInitialEnergy - minInitialEnergy)) + minInitialEnergy);
-		setVxVy();
-		IDNumber++;
-		ID = IDNumber;
-	}
+	  public void report(){
+	    System.out.println(getID() +
+	                       " at " +
+	                       x + ", " + y +
+	                       " has " +
+	                       getEnergy() + " energy.");
+	  }
 
-	private void setVxVy(){
-		vX = 0;
-		vY = 0;
-		while((vX == 0) && ( vY == 0)){
-			vX = (int)Math.floor(Math.random() * 3) - 1;
-			vY = (int)Math.floor(Math.random() * 3) - 1;
-		}
-	}
-
-	public void setRabbitsGrassSimulationSpace(RabbitsGrassSimulationSpace rgs){
-		rgsSpace = rgs;
-	}
-
-	public void setXY(int newX, int newY){
-		x = newX;
-		y = newY;
-	}
 
 	public void draw(SimGraphics arg0) {
-		if(energy < 10)
-			arg0.drawFastRoundRect(Color.gray);
-		else
-			arg0.drawFastRoundRect(Color.white);
+		// TODO Auto-generated method stub
+		arg0.drawFastRoundRect(Color.white);
 	}
 
 	public int getX() {
+		// TODO Auto-generated method stub
 		return x;
 	}
 
 	public int getY() {
+		// TODO Auto-generated method stub
 		return y;
 	}
-
-	public int getEnergy() {
-		return energy;
-	}
-
-	public void setEnergy(int i) {
-		energy = i;
-	}
-
-	public String getID(){
-		return "A-" + ID;
-	}
-
-
-	public void report(){
-		System.out.println(getID() +
-				" at " +
-				x + ", " + y +
-				" has " +
-				getEnergy() + " [J]" );
-	}
-
+	
 	public void step(){
-		energy--;
-
+		
 		int newX = x + vX;
-		int newY = y + vY;
+	    int newY = y + vY;
 
-		Object2DGrid grid = rgsSpace.getCurrentAgentSpace();
-		newX = (newX + grid.getSizeX()) % grid.getSizeX();
-		newY = (newY + grid.getSizeY()) % grid.getSizeY();
+	    Object2DGrid grid = rgsSpace.getCurrentAgentSpace();
+	    newX = (newX + grid.getSizeX()) % grid.getSizeX();
+	    newY = (newY + grid.getSizeY()) % grid.getSizeY();
 
-		if(tryMove(newX, newY)){
-			energy += rgsSpace.takeGrassAt(x, y);
-		}
-		else{
-			setVxVy();
-		}
-
-	}
+	    if(tryMove(newX, newY)){
+	    	energy += rgsSpace.takeGrassAt(x, y);
+	    }
+	    setVxVy();
+	    
+	    energy--;
+	  }
+	
 	private boolean tryMove(int newX, int newY){
-		return rgsSpace.moveAgentAt(x, y, newX, newY);
-	}
+	    return rgsSpace.moveAgentAt(x, y, newX, newY);
+	  }
+
 
 }
