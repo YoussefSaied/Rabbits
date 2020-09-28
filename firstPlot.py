@@ -7,6 +7,7 @@ from sklearn.linear_model import LinearRegression
 
 data_dict = {}
 data_dict2 = {}
+data_dict3 = {}
 
 directory = 'experimentsData'
 
@@ -18,15 +19,18 @@ for i in range(30, 110, 10):
 	data_dict['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
 	data_dict2['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
 
-for i in range(150, 450, 50):
+for i in range(150, 1050, 50):
 	data_dict['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
+	# data_dict2['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
+
+for i in range(150, 300, 50):
 	data_dict2['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
 
 to_ploty_grass = []
 to_ploty_rabbits = []
 to_ploty_rabbits2 = []
 # to_ploty_energy = []
-to_plotx = [i for i in range(10, 26)] +  [i for i in range(30, 110, 10)] + [i for i in range(150, 450, 50)]
+to_plotx = [i for i in range(10, 26)] +  [i for i in range(30, 110, 10)] + [i for i in range(150, 1050, 50)]
 
 for key in data_dict.keys():
 	to_ploty_grass.append(data_dict[key].iloc[-100:, 1].sum()/100)
@@ -36,7 +40,7 @@ for key in data_dict.keys():
 for key in data_dict2.keys():
 	to_ploty_rabbits2.append(data_dict2[key].iloc[-100:, 2].sum()/100)
 
-X = np.array([i for i in range(30, 110, 10)] + [i for i in range(150, 450, 50)]).reshape(-1, 1)
+X = np.array([i for i in range(30, 110, 10)] + [i for i in range(150, 300, 50)]).reshape(-1, 1)
 X = np.concatenate((X, np.ones((X.shape[0], 1))), axis=1)
 y = np.array(to_ploty_rabbits2).reshape(-1, 1)
 
@@ -48,7 +52,10 @@ coef2 = reg.coef_[0][1]
 print('coef1 : {}'.format(coef1))
 print('coef2 : {}'.format(coef2))
 
-pred = reg.predict(X)
+# pred = reg.predict(X)
+
+X2 = np.array([i for i in range(30, 110, 10)] + [i for i in range(150, 1050, 50)]).reshape(-1, 1)
+pred2 = X2 * coef1 + coef2
 
 plt.rcParams["figure.figsize"] = (8, 5)
 
@@ -67,7 +74,7 @@ ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 
 color = 'tab:green'
 # ax2.set_ylabel('Predicted Number of Rabbits', color=color)  # we already handled the x-label with ax1
-ax2.plot([i for i in range(30, 110, 10)] + [i for i in range(150, 450, 50)], pred, color=color, linestyle='dashed', label='Line of best fit')
+ax2.plot([i for i in range(30, 110, 10)] + [i for i in range(150, 1050, 50)], pred2, color=color, linestyle='dashed', label='Line of best fit')
 ax2.tick_params(axis='y', labelcolor=color)
 
 color = 'tab:blue'
