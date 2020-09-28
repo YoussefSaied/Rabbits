@@ -5,16 +5,22 @@ import matplotlib
 from sklearn.linear_model import LinearRegression
 
 
+directory = 'experimentsData'
+
 data_dict = {}
 data_dict2 = {}
 
 for i in range(10, 26):
-	data_dict['data_{}'.format(i)] = pd.read_csv('totalGrass{}.csv'.format(i))
+	data_dict['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
 
 
 for i in range(30, 110, 10):
-	data_dict['data_{}'.format(i)] = pd.read_csv('totalGrass{}.csv'.format(i))
-	data_dict2['data_{}'.format(i)] = pd.read_csv('totalGrass{}.csv'.format(i))
+	data_dict['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
+	data_dict2['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
+
+for i in range(150, 1050, 50):
+	data_dict['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
+	# data_dict2['data_{}'.format(i)] = pd.read_csv('{}/totalGrass{}.csv'.format(directory, i))
 
 to_ploty_grass = []
 to_ploty_rabbits = []
@@ -46,7 +52,7 @@ plt.rcParams["figure.figsize"] = (8, 5)
 
 fig, ax1 = plt.subplots()
 
-key = 'data_100'
+key = 'data_400'
 
 color = 'tab:red'
 ax1.set_xlabel('Time steps', fontsize=15)
