@@ -31,23 +31,20 @@ import uchicago.src.sim.util.SimUtilities;
 public class RabbitsGrassSimulationModel extends SimModelImpl {     
     // Default Values
     private static final int BIRTH_THRESHOLD = 21;
-    private static final int GRASS_GROWTH_RATE = 400;
-    private static final int INITIALGRASS = 4000;
+    private static final int GRASS_GROWTH_RATE = 1050;
+    private static final int GRID_SIZE = 20;
+    private static final int INITIAL_GRASS = 4000;
     private static final int MAX_INIT_ENERGY = 20;
     private static final int MIN_INIT_ENERGY = 10;
-    private static final int NUMAGENTS = 10;
-    private static final int WORLDXSIZE = 20;
-    private static final int WORLDYSIZE = 20;
+    private static final int NUM_AGENTS = 10;
 
     private int birthThreshold = BIRTH_THRESHOLD;
-    private int grass = INITIALGRASS;
+    private int grass = INITIAL_GRASS;
     private int grassGrowthRate = GRASS_GROWTH_RATE;
-    private int gridSize = WORLDXSIZE * WORLDYSIZE;
+    private int gridSize = GRID_SIZE;
     private int maxInitEnergy = MAX_INIT_ENERGY;
     private int minInitEnergy = MIN_INIT_ENERGY;
-    private int numAgents = NUMAGENTS;
-    private int worldXSize = WORLDXSIZE;
-    private int worldYSize = WORLDYSIZE;
+    private int numAgents = NUM_AGENTS;
 
     private int currentStep = 0;
     private int currentTotalEnergy = 0;
@@ -146,7 +143,7 @@ public class RabbitsGrassSimulationModel extends SimModelImpl {
     public void buildModel() {
         System.out.println("Running BuildModel");
 
-        rgsSpace = new RabbitsGrassSimulationSpace(worldXSize, worldYSize);
+        rgsSpace = new RabbitsGrassSimulationSpace(gridSize, gridSize);
         rgsSpace.spreadGrass(grass);
 
         for(int i = 0; i < numAgents; i++) {
@@ -324,20 +321,13 @@ public class RabbitsGrassSimulationModel extends SimModelImpl {
         numAgents = na;
     }
 
-    public int getWorldXSize() {
-        return worldXSize;
+    public int getGridSize() {
+        return gridSize;
     }
 
-    public void setWorldXSize(int wxs) {
-        worldXSize = wxs;
-    }
 
-    public int getWorldYSize() {
-        return worldYSize;
-    }
-
-    public void setWorldYSize(int wys) {
-        worldYSize = wys;
+    public void setGridSize(int gsz) {
+        gridSize = gsz;
     }
 
     public int getGrass() {
@@ -364,4 +354,3 @@ public class RabbitsGrassSimulationModel extends SimModelImpl {
         minInitEnergy = i;
     }
 }
-
